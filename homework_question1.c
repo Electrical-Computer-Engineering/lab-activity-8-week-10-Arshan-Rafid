@@ -79,21 +79,16 @@ char *my_strcat(char str[], char str2[]){ //concatenate (add to end of string)
 
 char *ToPigLatin(char *word) 
 {
-  char way[] = {'w', 'a', 'y', '\0'};
-  char ay[] = {'a', 'y', '\0'};
+  char way[] = {'w', 'a', 'y', '\0'}; // for words starting with vowels
+  char ay[] = {'a', 'y', '\0'}; // for consonant words
   int i = 0, j = 0;
-  char cons[MAX] = {'\0'};
+  char cons[MAX] = {'\0'}; //need to initialize strings here
   char vow[MAX] = {'\0'};
   char finalstring[MAX] = {'\0'};
-//   int isupper = 0;
 
-  if (my_vowel(word[i]) == 0 || word[0] == 'y' || word[0] == 'Y') //if the word starts with a consonant, y in this case is a consonant
-  {
-    // if (my_is_upper(word[i])){
-    //     int isupper = 1;
-    // }
 
-    while (my_vowel(word[i]) == 0) //continue as long as there's consonants
+  if (my_vowel(word[i]) == 0 || word[0] == 'y' || word[0] == 'Y'){ //if the word starts with a consonant, y in this case is a consonant
+    while (my_vowel(word[i]) == 0) //continue as long as the character is a consonant and not a vowel
     {
       cons[i] = word[i];
       i++;
@@ -103,45 +98,40 @@ char *ToPigLatin(char *word)
     {
       vow[j] = word[i];
       i++;
-      j++;
+      j++; // use j instead of i because we start from 0 again for vow string
     }
 
-    if (my_is_upper(cons[0])){
+    if (my_is_upper(cons[0])){ //checks if first consonant is an uppercase
         if (my_to_upper(vow[0])){
-            vow[0] = vow[0] - 32; // convert the first letter to uppercase, in this case the first letter is always the vowel
+            vow[0] = vow[0] - 32; // convert the first letter of the vowel string to uppercase, in this case the first letter is always the vowel
         }
         if (my_to_lower(cons[0])){
-            cons[0] = cons[0] + 32; // convert the consonant that was moved over to lower case
+            cons[0] = cons[0] + 32; // convert the first consonant that will be moved over to the end to lower case
         }
     }
-
-    my_strcpy(finalstring, vow);
-    my_strcat(finalstring, cons);
-    my_strcat(finalstring, ay);
+    my_strcpy(finalstring, vow); //copy the letters after the first vowel
+    my_strcat(finalstring, cons); //add the consonants preceding the first vowel
+    my_strcat(finalstring, ay); // add "ay"
   } 
 
 
-  else if (my_vowel(word[0]) == 1) //if it starts with a vowel
+  else if (my_vowel(word[0]) == 1) //if the word starts with a vowel, else if and not if because if would've caused words beginning with Y to have problems
   {
     my_strcpy(finalstring, word);
-    my_strcat(finalstring, way);
+    my_strcat(finalstring, way); //we're just adding way really, no need to check for upper case since the word isn't moving
   }
   
-  finalstring[my_strlen(finalstring)] = '\0';
-  my_strcpy(word, finalstring);
-  return word;
+  finalstring[my_strlen(finalstring)] = '\0'; // end final string
+  my_strcpy(word, finalstring); //copy the final string back into the word argument
+  return word; // return argument
 }
 
 int main() 
 {
-  char inputs[5][MAX]; // array to hold all the input strings 
-  char finalstring[MAX];    
-  int i = 0, length;
+  char inputs[5][MAX]; // array to hold all the input strings for simplicity  
+  int i = 0;
+  printf("Input 5 words: ");
+  scanf("%s %s %s %s %s", inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]);
+  printf("%s %s %s %s %s", ToPigLatin(inputs[0]), ToPigLatin(inputs[1]), ToPigLatin(inputs[2]), ToPigLatin(inputs[3]), ToPigLatin(inputs[4]));
 
-  printf("Enter five words separated by spaces: ");
-  scanf("%s %s %s %s %s", inputs[0], inputs[1], inputs[2], inputs[3],
-        inputs[4]);
-
-printf("%s %s %s %s %s", ToPigLatin(inputs[0]), ToPigLatin(inputs[1]), ToPigLatin(inputs[2]), ToPigLatin(inputs[3]),
-        ToPigLatin(inputs[4]));
 }
