@@ -8,12 +8,12 @@ int my_strcmp(char str[], char str2[]){
     while ((str2[l]) != '\0'){ // need length of second string
         l++;}
     int k= 0;
-    while ((str[k]) != '\0'){ // need length of second string
+    while ((str[k]) != '\0'){ // need length of first string
         k++;}
 
     int j = 0;
     for (int i = 0; i < l; i++){
-        if (str[i] == str2[i]){
+        if (str[i] == str2[i]){ //iterates through to check if the strings are the same
             j++;
     } 
     if (j == k){
@@ -22,7 +22,7 @@ int my_strcmp(char str[], char str2[]){
     }
 }
 
-int my_strncmp(char str[], char str2[], int n){
+int my_strncmp(char str[], char str2[], int n){ // same comparison between two strings as above just for up to n terms
     int j = 0;
     for (int i = 0; i < n; i++){
         if (str[i] == str2[i]){
@@ -34,7 +34,7 @@ int my_strncmp(char str[], char str2[], int n){
     }
 }
 
-char *my_strcpy(char str[], char str2[]){
+char *my_strcpy(char str[], char str2[]){ //copies one string to the other
     int j = 0;
     while ((str[j] = str2[j]) != '\0'){
         j++;
@@ -42,7 +42,7 @@ char *my_strcpy(char str[], char str2[]){
     return str;
 }
 
-char *my_strcat(char str[], char str2[]){
+char *my_strcat(char str[], char str2[]){ // concatenates string 2 at the end of string 1
     int j = 0;
 
     while ((str2[j]) != '\0'){ // need length of second string

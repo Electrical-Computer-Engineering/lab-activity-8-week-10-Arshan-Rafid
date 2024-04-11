@@ -6,7 +6,7 @@
 
 #define size 10
 
-int main(){
+int main(){ // program for printing a string with a decreasing # of characters on each line
     char str[size + 1];
     printf("Input: ");
     scanf("%s", &str);

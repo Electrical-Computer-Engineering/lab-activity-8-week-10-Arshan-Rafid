@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int my_isalpha(char letter){
+int my_isalpha(char letter){ //checks if a character is a letter
     if (letter >= 'A' && letter <= 'Z' || letter >='a' && letter <= 'z'){
         return 1;
     }
@@ -12,7 +12,7 @@ int my_isalpha(char letter){
     }
 }
 
-int my_isdigit(char letter){
+int my_isdigit(char letter){ //checks if a character is a number
     if (letter >= '0' && letter <= '9'){
         return 1;
     }
@@ -21,7 +21,7 @@ int my_isdigit(char letter){
     }
 }
 
-int my_is_upper(char letter){
+int my_is_upper(char letter){ //checks if a letter is uppercase
     if (letter >= 'A' && letter <= 'Z'){
         return 1;
     }
@@ -30,7 +30,7 @@ int my_is_upper(char letter){
     }
 }
 
-int my_to_upper(char letter){
+int my_to_upper(char letter){  //converts lowercase letters to uppercase
     if (letter >= 'a' && letter <= 'z'){
         return letter -= 32;
     }
@@ -39,7 +39,7 @@ int my_to_upper(char letter){
     }
 }
 
-int my_to_lower(char letter){
+int my_to_lower(char letter){ // converts uppercase to lowercase
     if (letter >= 'A' && letter <= 'Z'){
         return letter += 32;
     }
