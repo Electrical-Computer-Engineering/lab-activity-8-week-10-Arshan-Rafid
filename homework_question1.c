@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #define MAX 100
 
-int my_vowel(char letter){ // change this to vowels not uppercase
-    if (letter == 'A' || letter == 'a' || letter == 'E' || letter == 'e' || letter == 'I' || letter == 'i' || letter == 'O' || letter == 'o' || letter == 'U' || letter == 'u'){
+int my_vowel(char letter){ // check for vowels
+    if (letter == 'A' || letter == 'a' || letter == 'E' || letter == 'e' || letter == 'I' || letter == 'i' || letter == 'O' || letter == 'o' || letter == 'U' || letter == 'u' || letter == 'Y' || letter == 'y'){
         return 1;
     }
     else{
@@ -13,9 +13,51 @@ int my_vowel(char letter){ // change this to vowels not uppercase
     }
 }
 
-//concatenate function
+int my_is_upper(char letter){ // check for uppercase
+    if (letter >= 'A' && letter <= 'Z'){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
-char *my_strcat(char str[], char str2[]){
+int my_to_upper(char letter){ // convert to upper from lower
+    if (letter >= 'a' && letter <= 'z'){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int my_to_lower(char letter){ // convert to lower from upper
+    if (letter >= 'A' && letter <= 'Z'){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int my_strlen(char str[]) //check string length
+{
+  int i = 0;
+  while (str[i] != '\0') {
+    i++;
+  }
+  return i;
+}
+
+char *my_strcpy(char str[], char str2[]){ //copies string
+    int j = 0;
+    while ((str[j] = str2[j]) != '\0'){
+        j++;
+    }
+    return str;
+}
+
+char *my_strcat(char str[], char str2[]){ //concatenate (add to end of string)
     int j = 0;
 
     while ((str2[j]) != '\0'){ // need length of second string
@@ -23,7 +65,7 @@ char *my_strcat(char str[], char str2[]){
     }
 
     int k= 0;
-    while ((str[k]) != '\0'){ // need length of second string
+    while ((str[k]) != '\0'){ // need length of first string
         k++;
     }
 
@@ -33,45 +75,73 @@ char *my_strcat(char str[], char str2[]){
     return str;
 }
 
-char *ToPigLatin(char str[]){
-    int i = 0;
-    char way[4] = {'w','a','y','\0'};
-    char ay[3] = {'a', 'y', '\0'};
-    char empty[MAX];
-    char finalstring[MAX];
 
-    if (str[i] == my_vowel(str[i])){
-        my_strcat(str, way);
-        my_strcat(finalstring, str);
-    }else {
-        char cons[MAX];
-        while (my_vowel(str[i]) == 0 && str[i] != 'Y' && str[i] != 'y'){
-            //my_strcat(cons, str[i]);
-            cons[i] = str[i];
-            i++;
-        }
-        while (str[i] != '\0'){ //after a vowel is found
-            //my_strcat(finalstring, str[i]);
-            finalstring[i] = str[i];
-            i++;
-        }
-        my_strcat(finalstring, cons);
-        my_strcat(finalstring, ay);
+
+char *ToPigLatin(char *word) 
+{
+  char way[] = {'w', 'a', 'y', '\0'};
+  char ay[] = {'a', 'y', '\0'};
+  int i = 0, j = 0;
+  char cons[MAX] = {'\0'};
+  char vow[MAX] = {'\0'};
+  char finalstring[MAX] = {'\0'};
+//   int isupper = 0;
+
+  if (my_vowel(word[i]) == 0 || word[0] == 'y' || word[0] == 'Y') //if the word starts with a consonant, y in this case is a consonant
+  {
+    // if (my_is_upper(word[i])){
+    //     int isupper = 1;
+    // }
+
+    while (my_vowel(word[i]) == 0) //continue as long as there's consonants
+    {
+      cons[i] = word[i];
+      i++;
     }
 
-    finalstring[i] = '\0';
-    return finalstring;
+    while (word[i] != '\0') //once there is a vowel, continue until end of string
+    {
+      vow[j] = word[i];
+      i++;
+      j++;
+    }
+
+    if (my_is_upper(cons[0])){
+        if (my_to_upper(vow[0])){
+            vow[0] = vow[0] - 32; // convert the first letter to uppercase, in this case the first letter is always the vowel
+        }
+        if (my_to_lower(cons[0])){
+            cons[0] = cons[0] + 32; // convert the consonant that was moved over to lower case
+        }
+    }
+
+    my_strcpy(finalstring, vow);
+    my_strcat(finalstring, cons);
+    my_strcat(finalstring, ay);
+  } 
+
+
+  else if (my_vowel(word[0]) == 1) //if it starts with a vowel
+  {
+    my_strcpy(finalstring, word);
+    my_strcat(finalstring, way);
+  }
+  
+  finalstring[my_strlen(finalstring)] = '\0';
+  my_strcpy(word, finalstring);
+  return word;
 }
 
-int main(){
-    char str1[MAX];
-    char str2[MAX];
-    char str3[MAX];
-    char str4[MAX];
-    char str5[MAX];
+int main() 
+{
+  char inputs[5][MAX]; // array to hold all the input strings 
+  char finalstring[MAX];    
+  int i = 0, length;
 
-    printf("Enter 5 words");
-    scanf("%s %s %s %s %s", &str1, &str2, &str3, &str4, &str5);
-    printf("%s\n%s\n%s\n%s\n%s\n", ToPigLatin(str1), ToPigLatin(str2), ToPigLatin(str3), ToPigLatin(str4), ToPigLatin(str5));
+  printf("Enter five words separated by spaces: ");
+  scanf("%s %s %s %s %s", inputs[0], inputs[1], inputs[2], inputs[3],
+        inputs[4]);
 
+printf("%s %s %s %s %s", ToPigLatin(inputs[0]), ToPigLatin(inputs[1]), ToPigLatin(inputs[2]), ToPigLatin(inputs[3]),
+        ToPigLatin(inputs[4]));
 }
